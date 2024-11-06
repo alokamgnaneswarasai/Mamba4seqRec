@@ -32,10 +32,22 @@ if __name__ == '__main__':
     # dataset filtering
     dataset = create_dataset(config)
     logger.info(dataset)
+    print(type(dataset))
+    # dataset.data_augmentation()
+    
+    # methods = [method for method in dir(dataset) if callable(getattr(dataset, method))]
+    # print(methods)
+    # dataset.prepare_data_augmentation()
+    # uid_list = dataset.uid_list
+    # iid_list = dataset.iid_list
+    # logger.info(f"uid_list: {uid_list}")
+    # logger.info(f"iid_list: {iid_list}")
+    
 
     # dataset splitting
     train_data, valid_data, test_data = data_preparation(config, dataset)
-
+    
+    print(type(train_data))
     # model loading and initialization
     init_seed(config["seed"] + config["local_rank"], config["reproducibility"])
     model = Mamba4Rec(config, train_data.dataset).to(config['device'])
@@ -66,3 +78,4 @@ if __name__ == '__main__':
 
     logger.info(set_color("best valid ", "yellow") + f": {best_valid_result}")
     logger.info(set_color("test result", "yellow") + f": {test_result}")
+
