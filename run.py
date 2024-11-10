@@ -3,7 +3,7 @@ import logging
 from logging import getLogger
 from recbole.utils import init_logger, init_seed
 from recbole.trainer import Trainer
-from mamba4rec import Mamba4Rec
+from mamba4rec import Mamba4Rec,SASRec
 from recbole.config import Config
 from recbole.data import create_dataset, data_preparation
 from recbole.data.transform import construct_transform
@@ -20,7 +20,8 @@ from recbole.utils import (
 
 if __name__ == '__main__':
 
-    config = Config(model=Mamba4Rec, config_file_list=['config.yaml'])
+    # config = Config(model=Mamba4Rec, config_file_list=['config.yaml'])
+    config = Config(model=SASRec, config_file_list=['config.yaml'])
     init_seed(config['seed'], config['reproducibility'])
     
     # logger initialization
@@ -50,7 +51,8 @@ if __name__ == '__main__':
     print(type(train_data))
     # model loading and initialization
     init_seed(config["seed"] + config["local_rank"], config["reproducibility"])
-    model = Mamba4Rec(config, train_data.dataset).to(config['device'])
+    # model = Mamba4Rec(config, train_data.dataset).to(config['device'])
+    model = SASRec(config, train_data.dataset).to(config['device'])
     logger.info(model)
     
     transform = construct_transform(config)

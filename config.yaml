@@ -1,4 +1,4 @@
-gpu_id: '3'
+gpu_id: '5'
 log_wandb: False
 
 # mamba4rec settings
