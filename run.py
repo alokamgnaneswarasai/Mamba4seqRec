@@ -20,8 +20,8 @@ from recbole.utils import (
 
 if __name__ == '__main__':
 
-    # config = Config(model=Mamba4Rec, config_file_list=['config.yaml'])
-    config = Config(model=SASRec, config_file_list=['config.yaml'])
+    config = Config(model=Mamba4Rec, config_file_list=['config.yaml'])
+    # config = Config(model=SASRec, config_file_list=['config.yaml'])
     init_seed(config['seed'], config['reproducibility'])
     
     # logger initialization
@@ -31,7 +31,9 @@ if __name__ == '__main__':
     logger.info(config)
 
     # dataset filtering
+    print("Dataset creation started")
     dataset = create_dataset(config)
+    print("Dataset creation done")
     logger.info(dataset)
     print(type(dataset))
     # dataset.data_augmentation()
@@ -48,11 +50,13 @@ if __name__ == '__main__':
     # dataset splitting
     train_data, valid_data, test_data = data_preparation(config, dataset)
     
+    
+    # print(train_data)
     print(type(train_data))
     # model loading and initialization
     init_seed(config["seed"] + config["local_rank"], config["reproducibility"])
-    # model = Mamba4Rec(config, train_data.dataset).to(config['device'])
-    model = SASRec(config, train_data.dataset).to(config['device'])
+    model = Mamba4Rec(config, train_data.dataset).to(config['device'])
+    # model = SASRec(config, train_data.dataset).to(config['device'])
     logger.info(model)
     
     transform = construct_transform(config)

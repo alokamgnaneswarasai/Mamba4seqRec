@@ -1,4 +1,4 @@
-gpu_id: '5'
+gpu_id: '7'
 log_wandb: False
 
 # mamba4rec settings
@@ -6,13 +6,12 @@ hidden_size: 64                 # (int) Number of features in the hidden state.
 num_layers: 1                   # (int) Number of Mamba layers.
 dropout_prob: 0.2               # (float) Dropout rate.
 loss_type: 'CE'                 # (str) Type of loss function. Range in ['BPR', 'CE'].
-# loss_type: 'BPR'                 # (str) Type of loss function. Range in ['BPR', 'CE'].
 d_state: 32                     # (int) SSM state expansion factor
 d_conv: 4                       # (int) Local convolution width
 expand: 2                       # (int) Block expansion factor
 
 # dataset settings
-dataset: ml-1m
+dataset: lfm1b-tracks
 MAX_ITEM_LIST_LENGTH: 200       # 200 for MovieLens-1M
 
 # dataset: amazon-beauty
@@ -20,16 +19,17 @@ MAX_ITEM_LIST_LENGTH: 200       # 200 for MovieLens-1M
 # MAX_ITEM_LIST_LENGTH: 50      # 50 for Amazon datasets
 
 USER_ID_FIELD: user_id
-ITEM_ID_FIELD: item_id
+ITEM_ID_FIELD: tracks_id #item_id
 load_col:
-    inter: [user_id, item_id, timestamp]
+    # inter: [user_id, item_id, timestamp]  # use this for ml-1m
+    inter: [user_id,tracks_id,timestamp]  # use this for lfm-1b
 
 user_inter_num_interval: "[5,inf)"
 item_inter_num_interval: "[5,inf)"
 
 # training settings
 epochs: 300
-train_batch_size: 2048
+train_batch_size: 64 #2048
 learner: adam
 learning_rate: 0.001   
 eval_step: 1

@@ -7,3 +7,9 @@ saved/
 *.pth
 *.pyc
 .DS_Store
+*.txt
+*.mat
+*.inter
+*.item
+*.user
+*.json
